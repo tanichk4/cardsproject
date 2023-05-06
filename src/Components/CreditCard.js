@@ -11,6 +11,12 @@ import {
   InputContainer,
   RegisterField,
   RegisterErrorMessage,
+  Card,
+  CardFront,
+  HiddenNumbers,
+  CardFlex,
+  LogoContainer,
+  CardChip,
 } from "../Styles";
 import { CardsContext } from "./UseFetch";
 import { Formik, ErrorMessage } from "formik";
@@ -40,8 +46,9 @@ const CreditCard = () => {
     // сбрасываем форму
     resetForm(initialValues);
 
+    navigate('/');
+    
     console.log(newData);
-    console.log(initialValues);
   };
 
   const validationSchema = yup.object({
@@ -60,66 +67,84 @@ const CreditCard = () => {
   });
 
   return (
-      <PageContainer>
-        <InfoContainer>
-          <InfoTitle>Create a new card</InfoTitle>
-          <BackArrow onClick={handleClick} />
-        </InfoContainer>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={onSubmit}
-          validationSchema={validationSchema}
-        >
-          {({ isValid, isSubmitting }) => (
-            <RegisterForm>
-              <InputContainer>
-                <RegisterLabel htmlFor="numbers">Card number</RegisterLabel>
-                <RegisterField
-                  type="text"
-                  id="numbers"
-                  name="numbers"
-                  placeholder="0888008800005569"
-                />
-                <RegisterErrorMessage name="numbers" />
-              </InputContainer>
-              <InputContainer>
-                <RegisterLabel htmlFor="cvv">CVV</RegisterLabel>
-                <RegisterField
-                  type="text"
-                  id="cvv"
-                  name="cvv"
-                  placeholder="123"
-                />
-                <ErrorMessage name="cvv" />
-              </InputContainer>
-              <InputContainer>
-                <RegisterLabel htmlFor="user_name">
-                  Your full name
-                </RegisterLabel>
-                <RegisterField
-                  type="text"
-                  id="user_name"
-                  name="user_name"
-                  placeholder="John Snow"
-                />
-                <ErrorMessage name="user_name" />
-              </InputContainer>
-              <InputContainer>
-                <RegisterLabel htmlFor="type">VISA or MASTERCARD</RegisterLabel>
-                <RegisterField as="select" id="type" name="type">
-                  <option value="">Select card type</option>
-                  <option value="VISA">VISA</option>
-                  <option value="MASTERCARD">MASTERCARD</option>
-                </RegisterField>
-              </InputContainer>
-              <ErrorMessage name="type" />
-              <FormButton type="submit" disabled={isValid}>
-                Add card
-              </FormButton>
-            </RegisterForm>
-          )}
-        </Formik>
-      </PageContainer>
+    <PageContainer>
+      <InfoContainer>
+        <InfoTitle>Create a new card</InfoTitle>
+        <BackArrow onClick={handleClick} />
+      </InfoContainer>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        validationSchema={validationSchema}
+      >
+        {({ isValid, handleChange, values }) => (
+          <RegisterForm>
+            <Card>
+              <CardFront>
+                <CardChip />
+                <HiddenNumbers show={true}>{values.numbers}</HiddenNumbers>
+                <CardFlex>
+                  <h2>{values.user_name}</h2>
+                  <LogoContainer card={values.type} />
+                </CardFlex>
+              </CardFront>
+            </Card>
+            <InputContainer>
+              <RegisterLabel htmlFor="numbers">Card number</RegisterLabel>
+              <RegisterField
+                type="text"
+                id="numbers"
+                name="numbers"
+                placeholder="0888008800005569"
+                onChange={handleChange}
+              />
+              <RegisterErrorMessage name="numbers" />
+            </InputContainer>
+            <InputContainer>
+              <RegisterLabel htmlFor="cvv">CVV</RegisterLabel>
+              <RegisterField
+                type="text"
+                id="cvv"
+                name="cvv"
+                placeholder="123"
+                onChange={handleChange}
+              />
+              <ErrorMessage name="cvv" />
+            </InputContainer>
+            <InputContainer>
+              <RegisterLabel htmlFor="user_name">Your full name</RegisterLabel>
+              <RegisterField
+                type="text"
+                id="user_name"
+                name="user_name"
+                placeholder="John Snow"
+                onChange={handleChange}
+              />
+              <ErrorMessage name="user_name" />
+            </InputContainer>
+            <InputContainer>
+              <RegisterLabel htmlFor="type">VISA or MASTERCARD</RegisterLabel>
+              <RegisterField
+                as="select"
+                id="type"
+                name="type"
+                onChange={handleChange}
+              >
+                <option value="" defaultValue disabled>
+                  Select card type
+                </option>
+                <option value="visa">VISA</option>
+                <option value="mastercard">MASTERCARD</option>
+              </RegisterField>
+            </InputContainer>
+            <ErrorMessage name="type" />
+            <FormButton type="submit" disabled={!isValid}>
+              Add card
+            </FormButton>
+          </RegisterForm>
+        )}
+      </Formik>
+    </PageContainer>
   );
 };
 

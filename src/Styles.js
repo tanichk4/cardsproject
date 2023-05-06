@@ -207,7 +207,7 @@ export const FormButton = styled.button`
 export const RegisterForm = styled(Form)`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 `;
 
 export const InputContainer = styled.div`
@@ -216,6 +216,9 @@ export const InputContainer = styled.div`
   align-items: flex-start;
   color: red;
   box-sizing: border-box;
+  &:first-child{
+    margin-bottom: 44px;
+  }
 
   &:not(:last-child) {
     margin-bottom: 20px;
