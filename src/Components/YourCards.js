@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { CardsContext } from "./UseFetch.js";
 import {
   PageContainer,
@@ -14,12 +14,36 @@ import LoadingScreen from "./LoadingScreen.js";
 const YourCards = () => {
   const { data, user } = useContext(CardsContext);
 
-  if (!data || data.length === 0) {
-    return <LoadingScreen />;
-  }
+  const cardList = useMemo(() => {
+    if (!data || data.length === 0) {
+      return null;
+    }
 
-  console.log(data);
-  console.log(user);
+    const userCards = user.map((item) => {
+      return (
+        <UserCard
+          userCvv={item.userCvv}
+          userName={item.userName}
+          userNumbers={item.userNumbers}
+          userType={item.userType}
+        />
+      );
+    });
+
+    const cards = data.map(({ user_name, data }) => {
+      return data.map(({ card, statistic }) => (
+        <Card
+          key={card.user_id}
+          owner={user_name}
+          statistic={statistic}
+          card={card}
+        />
+      ));
+    });
+
+    return [...userCards, ...cards];
+  }, [data, user]);
+
   return (
     <PageContainer>
       <InfoContainer>
@@ -29,27 +53,7 @@ const YourCards = () => {
         </Link>
       </InfoContainer>
 
-      {user.map((item) => {
-        return (
-          <UserCard
-            userCvv={item.userCvv}
-            userName={item.userName}
-            userNumbers={item.userNumbers}
-            userType={item.userType}
-          />
-        );
-      })}
-
-      {data.map(({ user_name, data }) => {
-        return data.map(({ card, statistic }) => (
-          <Card
-            key={card.user_id}
-            owner={user_name}
-            statistic={statistic}
-            card={card}
-          />
-        ));
-      })}
+      {cardList || <LoadingScreen />}
     </PageContainer>
   );
 };

@@ -308,8 +308,8 @@ export const Card = styled.div`
 `;
 
 export const RegisterCard = styled(Card)`
-margin-bottom: 45px;
-`
+  margin-bottom: 45px;
+`;
 
 export const CardFront = styled.div`
   border-radius: 48.6px;

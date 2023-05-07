@@ -11,7 +11,6 @@ import {
   InputContainer,
   RegisterField,
   RegisterErrorMessage,
-  Card,
   CardFront,
   HiddenNumbers,
   CardFlex,
@@ -30,7 +29,7 @@ const CreditCard = () => {
   const navigate = useNavigate();
 
   if (!data || data.length === 0) {
-    return <LoadingScreen />
+    return <LoadingScreen />;
   }
   function handleClick() {
     navigate(-1);
@@ -44,18 +43,13 @@ const CreditCard = () => {
   };
 
   const onSubmit = (values, { resetForm }) => {
-    // создаем новый объект данных, который содержит старые данные и новые данные пользователя
-    // const newData = [...data, values];
     const newUser = values;
 
-    // вызываем функцию обновления данных с новыми данными
     updateUser(newUser);
-    // сбрасываем форму
+
     resetForm(initialValues);
 
     navigate("/yourcards");
-
-    console.log(newUser);
   };
 
   const validationSchema = yup.object({
