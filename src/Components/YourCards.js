@@ -8,34 +8,45 @@ import {
 } from "../Styles.js";
 import { Link } from "react-router-dom";
 import { Card } from "./Card.js";
+import { UserCard } from "./UserCard.js";
+import LoadingScreen from "./LoadingScreen.js";
 
 const YourCards = () => {
-  const { data } = useContext(CardsContext);
+  const { data, user } = useContext(CardsContext);
 
   if (!data || data.length === 0) {
-    return <div>Loading...</div>;
+    return <LoadingScreen />;
   }
 
   console.log(data);
-
+  console.log(user);
   return (
     <PageContainer>
       <InfoContainer>
         <InfoTitle>Your Cards</InfoTitle>
-        <Link to="/newuser">
+        <Link to="/">
           <InfoIcon />
         </Link>
       </InfoContainer>
-      {data.map(({ user_name, data, type, numbers, cvv }) => {
+
+      {user.map((item) => {
+        return (
+          <UserCard
+            userCvv={item.userCvv}
+            userName={item.userName}
+            userNumbers={item.userNumbers}
+            userType={item.userType}
+          />
+        );
+      })}
+
+      {data.map(({ user_name, data }) => {
         return data.map(({ card, statistic }) => (
           <Card
-            key={card.id}
+            key={card.user_id}
             owner={user_name}
             statistic={statistic}
             card={card}
-            type={type}
-            numbers={numbers}
-            cvv={cvv}
           />
         ));
       })}

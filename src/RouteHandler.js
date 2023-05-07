@@ -6,8 +6,8 @@ import CreditCard from "./Components/CreditCard";
 const RouteHandler = () => {
   return (
     <Routes>
-      <Route path="/" element={<YourCards />} />
-      <Route path="/newuser" element={<CreditCard />} />
+      <Route path="/" element={<CreditCard />} />
+      <Route path="/yourcards" element={<YourCards />} />
     </Routes>
   );
 };

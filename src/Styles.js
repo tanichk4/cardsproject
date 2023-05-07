@@ -11,6 +11,18 @@ const slideInAnimation = keyframes`
   }
 `;
 
+const gradientAnimation = keyframes`
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+`;
+
 export const PageContainer = styled.div`
   align-self: flex-start;
   position: relative;
@@ -116,7 +128,7 @@ export const CardChip = styled.div`
   background-image: url("/chip.svg");
   background-size: cover;
   width: 69.6px;
-  height: 56.23px;
+  height: 44.6px;
 `;
 export const CardNumberContainer = styled.div`
   font-size: 30px;
@@ -246,9 +258,8 @@ export const RegisterField = styled(Field)`
   line-height: 38px;
   letter-spacing: 4.17391px;
   color: rgba(0, 0, 0, 0.44);
-  &::placeholder {
-    padding: 19px 436px 19px 23px;
-  }
+  box-sizing: border-box;
+  padding: 19px 0 19px 23px;
 
   &:focus {
     outline: none;
@@ -296,6 +307,10 @@ export const Card = styled.div`
   transition: height 0.3s ease-in-out;
 `;
 
+export const RegisterCard = styled(Card)`
+margin-bottom: 45px;
+`
+
 export const CardFront = styled.div`
   border-radius: 48.6px;
   padding: 55px;
@@ -307,8 +322,8 @@ export const CardFront = styled.div`
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
-  background: #b08ead;
-  color: white;
+  background: ${({ card }) =>
+    card === "visa" ? "url('/visafront.png')" : "url('/mcfront.png')"};
 
   & p {
     top: calc(50% - 31px / 2 + 85.63px);
@@ -331,6 +346,9 @@ export const CardBack = styled.div`
   height: 100%;
   backface-visibility: hidden;
   background: #b08ead;
+  background: ${({ card }) =>
+    card === "visa" ? "url('/visaback.png')" : "url('/mcback.png')"};
+  color: white;
   color: white;
 `;
 
@@ -382,5 +400,26 @@ export const StatisticsBack = styled.div`
   height: 100%;
   backface-visibility: hidden;
   background: #b08ead;
+  color: white;
+`;
+
+export const LoadingContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: linear-gradient(-45deg, #474162, #d6afcc, #c6c1e7, #f2f2f2);
+  background-size: 400% 400%;
+  animation: ${gradientAnimation} 15s ease infinite;
+  animation-duration: 4s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const LoadingText = styled.h1`
+  font-size: 3rem;
   color: white;
 `;

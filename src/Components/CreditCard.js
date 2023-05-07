@@ -17,56 +17,63 @@ import {
   CardFlex,
   LogoContainer,
   CardChip,
+  RegisterCard,
 } from "../Styles";
 
 import { CardsContext } from "./UseFetch";
 import { Formik, ErrorMessage } from "formik";
 import * as yup from "yup";
+import LoadingScreen from "./LoadingScreen";
 
 const CreditCard = () => {
-  const { data, updateData } = useContext(CardsContext);
-
+  const { data, updateUser } = useContext(CardsContext);
   const navigate = useNavigate();
 
+  if (!data || data.length === 0) {
+    return <LoadingScreen />
+  }
   function handleClick() {
     navigate(-1);
   }
 
   const initialValues = {
-    numbers: "",
-    cvv: "",
-    user_name: "",
-    type: "",
+    userNumbers: "",
+    userCvv: "",
+    userName: "",
+    userType: "",
   };
 
   const onSubmit = (values, { resetForm }) => {
     // создаем новый объект данных, который содержит старые данные и новые данные пользователя
     // const newData = [...data, values];
-    const newData = values;
+    const newUser = values;
 
     // вызываем функцию обновления данных с новыми данными
-    updateData(newData);
+    updateUser(newUser);
     // сбрасываем форму
     resetForm(initialValues);
 
-    navigate("/");
+    navigate("/yourcards");
 
-    console.log(newData);
+    console.log(newUser);
   };
 
   const validationSchema = yup.object({
-    numbers: yup
+    userNumbers: yup
       .string()
       .matches(/^\d+$/, "Only digits allowed")
       .matches(/^[0-9]{13}$|^[0-9]{16}$/, "Card number must be 13 or 16 digits")
       .required("Required"),
-    cvv: yup
+    userCvv: yup
       .string()
       .matches(/^\d+$/, "Only digits allowed")
       .matches(/^[0-9]{3}$/, "CVV must be 3 digits")
       .required("Required"),
-    user_name: yup.string().required("Required"),
-    type: yup.string().required("Required"),
+    userName: yup
+      .string()
+      .matches(/^[a-zA-Z\s]*$/, "Only letters allowed")
+      .required("Required"),
+    userType: yup.string().required("Required"),
   });
 
   return (
@@ -82,65 +89,65 @@ const CreditCard = () => {
       >
         {({ isValid, handleChange, values }) => (
           <RegisterForm>
-            <Card>
-              <CardFront>
+            <RegisterCard>
+              <CardFront card={values.userType}>
                 <CardChip />
-                <HiddenNumbers show={true}>{values.numbers}</HiddenNumbers>
+                <HiddenNumbers show={true}>{values.userNumbers}</HiddenNumbers>
                 <CardFlex>
-                  <h2>{values.user_name}</h2>
-                  <LogoContainer card={values.type} />
+                  <h2>{values.userName}</h2>
+                  <LogoContainer card={values.userType} />
                 </CardFlex>
               </CardFront>
-            </Card>
+            </RegisterCard>
             <InputContainer>
-              <RegisterLabel htmlFor="numbers">Card number</RegisterLabel>
+              <RegisterLabel htmlFor="userNumbers">Card number</RegisterLabel>
               <RegisterField
                 type="text"
-                id="numbers"
-                name="numbers"
+                id="userNumbers"
+                name="userNumbers"
                 placeholder="0888008800005569"
                 onChange={handleChange}
               />
-              <RegisterErrorMessage name="numbers" />
+              <RegisterErrorMessage name="userNumbers" />
             </InputContainer>
             <InputContainer>
-              <RegisterLabel htmlFor="cvv">CVV</RegisterLabel>
+              <RegisterLabel htmlFor="userCvv">CVV</RegisterLabel>
               <RegisterField
                 type="text"
-                id="cvv"
-                name="cvv"
+                id="userCvv"
+                name="userCvv"
                 placeholder="123"
                 onChange={handleChange}
               />
-              <ErrorMessage name="cvv" />
+              <ErrorMessage name="userCvv" />
             </InputContainer>
             <InputContainer>
-              <RegisterLabel htmlFor="user_name">Your full name</RegisterLabel>
+              <RegisterLabel htmlFor="userName">Your full name</RegisterLabel>
               <RegisterField
                 type="text"
-                id="user_name"
-                name="user_name"
+                id="userName"
+                name="userName"
                 placeholder="John Snow"
                 onChange={handleChange}
               />
-              <ErrorMessage name="user_name" />
+              <ErrorMessage name="userName" />
             </InputContainer>
             <InputContainer>
-              <RegisterLabel htmlFor="type">VISA or MASTERCARD</RegisterLabel>
+              <RegisterLabel htmlFor="userType">
+                VISA or MASTERCARD
+              </RegisterLabel>
               <RegisterField
                 as="select"
-                id="type"
-                name="type"
+                id="userType"
+                name="userType"
                 onChange={handleChange}
               >
-                <option value="" defaultValue disabled>
-                  Select card type
-                </option>
+                <option value="">Select card type</option>
                 <option value="visa">VISA</option>
                 <option value="mastercard">MASTERCARD</option>
               </RegisterField>
             </InputContainer>
-            <ErrorMessage name="type" />
+            <ErrorMessage name="userType" />
             <FormButton type="submit" disabled={!isValid}>
               Add card
             </FormButton>

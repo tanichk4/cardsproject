@@ -1,23 +1,22 @@
 import React, { useState } from "react";
 import {
-  IntroductionCard,
-  Card,
-  CardInner,
-  CardFront,
-  CardBack,
   ButtonContainer,
-  ButtonVisibility,
-  ButtonStatistics,
   ButtonFlip,
-  LogoContainer,
-  HiddenNumbers,
+  ButtonStatistics,
+  ButtonVisibility,
+  Card,
+  CardBack,
   CardChip,
   CardFlex,
+  CardFront,
+  CardInner,
   CardRectangle,
-  Statistics,
+  HiddenNumbers,
+  IntroductionCard,
+  LogoContainer,
 } from "../Styles";
 
-const CardWrapper = ({ owner, statistic, card }) => {
+const UserCardWrapper = ({ userCvv, userName, userNumbers, userType }) => {
   const [showButtons, setShowButtons] = useState(false);
   const [showNumbers, setShowNumbers] = useState(false);
   const [showStatistics, setShowStatistics] = useState(false);
@@ -32,24 +31,24 @@ const CardWrapper = ({ owner, statistic, card }) => {
     }
   };
 
-  const maskedNumber = card.numbers.replace(/\d(?=\d{4})/g, "*");
+  const maskedNumber = userNumbers.replace(/\d(?=\d{4})/g, "*");
 
   return (
     <IntroductionCard showStatistics={showStatistics}>
       <Card showStatistics={showStatistics} onClick={handleCardClick}>
         <CardInner isFlipped={isFlipped}>
-          <CardFront card={card.type}>
+          <CardFront card={userType}>
             <CardChip showStatistics={showStatistics} />
-            <HiddenNumbers show={showNumbers}>{card.numbers}</HiddenNumbers>
+            <HiddenNumbers show={showNumbers}>{userNumbers}</HiddenNumbers>
             {!showNumbers && maskedNumber}
             <CardFlex>
-              <h2>{owner}</h2>
-              <LogoContainer card={card.type} />
+              <h2>{userName}</h2>
+              <LogoContainer card={userType} />
             </CardFlex>
           </CardFront>
-          <CardBack card={card.type}>
-            <div>{card.cvv}</div>
-            <div>{card.expiry_date}</div>
+          <CardBack card={userType}>
+            <div>{userCvv}</div>
+            <div>{}</div>
             <CardRectangle />
           </CardBack>
         </CardInner>
@@ -63,24 +62,8 @@ const CardWrapper = ({ owner, statistic, card }) => {
           <ButtonFlip onClick={() => setIsFlipped((prev) => !prev)} />
         </ButtonContainer>
       )}
-      {showStatistics && (
-        <Statistics showStatistics={showStatistics}>
-          {statistic.map(({ id, date, place, expense, currency }) => {
-            return (
-              <div key={id}>
-                <div>{date}</div>
-                <div>{place}</div>
-                <div>
-                  {expense}
-                  {currency}
-                </div>
-              </div>
-            );
-          })}
-        </Statistics>
-      )}
     </IntroductionCard>
   );
 };
 
-export default CardWrapper;
+export default UserCardWrapper;
