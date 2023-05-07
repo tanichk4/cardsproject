@@ -12,6 +12,12 @@ import { Card } from "./Card.js";
 const YourCards = () => {
   const { data } = useContext(CardsContext);
 
+  if (!data || data.length === 0) {
+    return <div>Loading...</div>;
+  }
+
+  console.log(data);
+
   return (
     <PageContainer>
       <InfoContainer>
@@ -20,13 +26,16 @@ const YourCards = () => {
           <InfoIcon />
         </Link>
       </InfoContainer>
-      {data.map(({ user_name, data }) => {
+      {data.map(({ user_name, data, type, numbers, cvv }) => {
         return data.map(({ card, statistic }) => (
           <Card
+            key={card.id}
             owner={user_name}
             statistic={statistic}
-            stats={statistic.stats}
             card={card}
+            type={type}
+            numbers={numbers}
+            cvv={cvv}
           />
         ));
       })}

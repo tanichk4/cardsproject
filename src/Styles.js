@@ -216,7 +216,7 @@ export const InputContainer = styled.div`
   align-items: flex-start;
   color: red;
   box-sizing: border-box;
-  &:first-child{
+  &:first-child {
     margin-bottom: 44px;
   }
 

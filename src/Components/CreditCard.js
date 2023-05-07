@@ -18,6 +18,7 @@ import {
   LogoContainer,
   CardChip,
 } from "../Styles";
+
 import { CardsContext } from "./UseFetch";
 import { Formik, ErrorMessage } from "formik";
 import * as yup from "yup";
@@ -40,14 +41,16 @@ const CreditCard = () => {
 
   const onSubmit = (values, { resetForm }) => {
     // создаем новый объект данных, который содержит старые данные и новые данные пользователя
-    const newData = [...data, values];
+    // const newData = [...data, values];
+    const newData = values;
+
     // вызываем функцию обновления данных с новыми данными
     updateData(newData);
     // сбрасываем форму
     resetForm(initialValues);
 
-    navigate('/');
-    
+    navigate("/");
+
     console.log(newData);
   };
 

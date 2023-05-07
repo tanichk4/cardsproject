@@ -9,14 +9,23 @@ const CardsProvider = ({ children }) => {
 
   useEffect(() => {
     fetch(BASE_URL)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
       .then((res) => {
         setData([res]);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
   }, []);
 
   const updateData = (newData) => {
-    setData([...data, newData]); // Добавляем новые данные к существующим данным
+    // setData([...data, newData]); // Добавляем новые данные к существующим данным
+    setData([...data, newData]);
   };
 
   return (
