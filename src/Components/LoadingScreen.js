@@ -1,5 +1,5 @@
 import React from 'react'
-import { LoadingContainer, LoadingText } from '../Styles'
+import { LoadingContainer, LoadingText } from '../styles/Styles'
 
 const LoadingScreen = () => {
   return <LoadingContainer>

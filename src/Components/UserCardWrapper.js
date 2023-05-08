@@ -14,7 +14,7 @@ import {
   HiddenNumbers,
   IntroductionCard,
   LogoContainer,
-} from "../Styles";
+} from "../styles/Styles";
 
 const UserCardWrapper = ({ userCvv, userName, userNumbers, userType }) => {
   const [showButtons, setShowButtons] = useState(false);

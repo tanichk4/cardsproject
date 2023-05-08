@@ -17,9 +17,9 @@ import {
   LogoContainer,
   CardChip,
   RegisterCard,
-} from "../Styles";
+} from "../styles/Styles";
 
-import { CardsContext } from "./UseFetch";
+import { CardsContext } from "../context/CardsContext";
 import { Formik, ErrorMessage } from "formik";
 import * as yup from "yup";
 import LoadingScreen from "./LoadingScreen";
@@ -49,7 +49,7 @@ const CreditCard = () => {
 
     resetForm(initialValues);
 
-    navigate("/yourcards");
+    navigate("/");
   };
 
   const validationSchema = yup.object({

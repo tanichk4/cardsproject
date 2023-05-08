@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   IntroductionCard,
   Card,
@@ -15,7 +15,7 @@ import {
   CardFlex,
   CardRectangle,
   Statistics,
-} from "../Styles";
+} from "../styles/Styles";
 
 const CardWrapper = ({ owner, statistic, card }) => {
   const [showButtons, setShowButtons] = useState(false);
@@ -24,15 +24,17 @@ const CardWrapper = ({ owner, statistic, card }) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleCardClick = () => {
-    if (showStatistics === false) {
+    if (!showStatistics) {
       setShowButtons((prev) => !prev);
     } else {
-      setShowStatistics(false);
-      setShowButtons(true);
+      showStatistics && setShowStatistics(false);
     }
   };
 
-  const maskedNumber = card.numbers.replace(/\d(?=\d{4})/g, "*");
+  const maskedNumber = useMemo(
+    () => card.numbers.replace(/\d(?=\d{4})/g, "*"),
+    [card.numbers]
+  );
 
   return (
     <IntroductionCard showStatistics={showStatistics}>

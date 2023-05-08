@@ -1,11 +1,11 @@
 import React, { useContext, useMemo } from "react";
-import { CardsContext } from "./UseFetch.js";
+import { CardsContext } from "../context/CardsContext.js";
 import {
   PageContainer,
   InfoContainer,
   InfoIcon,
   InfoTitle,
-} from "../Styles.js";
+} from "../styles/Styles.js";
 import { Link } from "react-router-dom";
 import { Card } from "./Card.js";
 import { UserCard } from "./UserCard.js";
@@ -48,7 +48,7 @@ const YourCards = () => {
     <PageContainer>
       <InfoContainer>
         <InfoTitle>Your Cards</InfoTitle>
-        <Link to="/">
+        <Link to="/newuser">
           <InfoIcon />
         </Link>
       </InfoContainer>
