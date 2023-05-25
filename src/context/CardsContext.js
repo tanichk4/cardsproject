@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext } from "react";
+import { useEffect, useState, createContext } from "react";
 
 const BASE_URL = "https://my.api.mockaroo.com/cards/123.json?key=778301b0";
 
@@ -29,8 +29,8 @@ const CardsProvider = ({ children }) => {
   };
 
   const updateUser = (newUser) => {
-    setUser([...user, newUser])
-  }
+    setUser([...user, newUser]);
+  };
 
   return (
     <CardsContext.Provider value={{ data, updateData, user, updateUser }}>

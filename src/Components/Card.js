@@ -1,4 +1,3 @@
-import React from "react";
 import CardWrapper from "./CardWrapper.js";
 
 export const Card = ({ owner, statistic, card }) => {
